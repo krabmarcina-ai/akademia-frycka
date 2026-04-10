@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "https://akademiafrycka.pl",
+    canonical: "https://akademia-frycka.vercel.app",
   },
 };
 
@@ -49,7 +49,7 @@ const jsonLd = {
   name: 'Akademia "Frycka"',
   description:
     "Ekskluzywny salon fryzjerski na Górnej Wildzie w Poznaniu. Strzyżenie, koloryzacja, balayage, keratynowe prostowanie i zabiegi pielęgnacyjne.",
-  url: "https://akademiafrycka.pl",
+  url: "https://akademia-frycka.vercel.app",
   telephone: "+48515175405",
   address: {
     "@type": "PostalAddress",
