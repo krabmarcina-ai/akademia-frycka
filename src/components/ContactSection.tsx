@@ -233,16 +233,31 @@ export default function ContactSection() {
     message: "",
   });
 
+  const [error, setError] = useState<string | null>(null);
+
   const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
+    async (e: React.FormEvent) => {
       e.preventDefault();
       setSubmitting(true);
-      setTimeout(() => {
-        setSubmitting(false);
+      setError(null);
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.error || "Błąd wysyłania.");
+        }
         setSubmitted(true);
-      }, 1200);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Błąd wysyłania. Spróbuj ponownie.");
+      } finally {
+        setSubmitting(false);
+      }
     },
-    []
+    [form]
   );
 
   const set = (field: keyof FormState) => (v: string) =>
@@ -459,6 +474,9 @@ export default function ContactSection() {
                   </button>
                 </div>
 
+                {error && (
+                  <p className="text-red-400 text-xs text-center pt-1">{error}</p>
+                )}
                 <p className="text-[#3A3A3A] text-xs text-center pt-2">
                   * Pola wymagane. Twoje dane są bezpieczne.
                 </p>
